@@ -1,4 +1,0 @@
-max_element(a.begin(), a.end());
-
-what's assert
-whta's reverse
