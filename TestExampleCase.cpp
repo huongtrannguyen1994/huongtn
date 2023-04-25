@@ -1,52 +1,47 @@
-// C++ program to demonstrate lower_bound()
-// and upper_bound() in Vectors of Pairs
- 
+#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
  
-// Function to implement lower_bound()
-void findLowerBound(vector<pair<int, int> >& arr,
-                    pair<int, int>& p)
-{
-    // Given iterator points to the
-    // lower_bound() of given pair
-    auto low = lower_bound(arr.begin(), arr.end(), p);
+// our configuration
+vector<int> cfg;
  
-    cout << "lower_bound() for {2, 5}"
-         << " is at index: " << low - arr.begin() << endl;
+// Process with current configuration
+void process_config() {
+    for (auto e : cfg) {
+        cout << e << " ";
+    }
+    cout << endl;
 }
  
-// Function to implement upper_bound()
-void findUpperBound(vector<pair<int, int> >& arr,
-                    pair<int, int>& p)
-{
-    // Given iterator points to the
-    // upper_bound() of given pair
-    auto up = upper_bound(arr.begin(), arr.end(), p);
+// Backtracking function using recursive technique
+// Purpose:
+// - Need to get a value for configuration at position "index"
+// - Try to do the function again in the next index
+void backtrack(int index, const vector<int>& arr) {
+    int len = arr.size();
+    if (index == len) {
+        // got a configuration, so process it
+        process_config();
+        return;
+    }
  
-    cout << "upper_bound() for {2, 5}"
-         << " is at index: " << up - arr.begin() << endl;
+    // Consider what value should be chose next
+    for (auto consider_value : arr) {
+        bool canUse = true;
+        for (auto existed_value : cfg) {
+            if (consider_value == existed_value) canUse = false;
+        }
+        if (canUse) {
+            cfg.push_back(consider_value);
+            backtrack(index + 1, arr);
+            cfg.pop_back();
+        }
+    }
 }
  
-// Driver Code
-int main()
-{
-    // Given sorted vector of Pairs
-    vector<pair<int, int> > arr;
-    arr = { { 1, 3 }, { 1, 7 }, { 2, 4 },
-            { 2, 5 }, { 3, 8 }, { 8, 6 } };
  
-    // Given pair {2, 5}
-    int a = INT_MAX;
-    pair<int, int> p = { 2, a };
- 
-    // Function Call to find lower_bound
-    // of pair p in arr
-    findLowerBound(arr, p);
- 
-    // Function Call to find upper_bound
-    // of pair p in arr
-    findUpperBound(arr, p);
- 
+int main() {
+    vector<int> arr = {1, 2, 3};
+    backtrack(0, arr);
     return 0;
 }

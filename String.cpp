@@ -98,85 +98,90 @@ void _print(const Head &H, const Tail &...T) {
 #else
 #define debug(x...)
 #endif
-//Binary_search
-// vector<int> a = {1,2,6,4,3,4,5};
-//     sort(a.begin(), a.end());
-//     if (binary_search(a.begin(), a.end(), 3)) {
-//         cout << "tim thay 3";
-//     } else {
-//         cout << "khong tim thay";
-//     }
+Binary_search
+vector<int> a = {1,2,6,4,3,4,5};
+    sort(a.begin(), a.end());
+    if (binary_search(a.begin(), a.end(), 3)) {
+        cout << "tim thay 3";
+    } else {
+        cout << "khong tim thay";
+    }
 
-// Lower_bound search
-// int a[] = {10, 20, 30, 40, 50, 40, 30, 20, 10};
-// vector < int > v(a, a + 9);
+Lower_bound search
+int a[] = {10, 20, 30, 40, 50, 40, 30, 20, 10};
+vector < int > v(a, a + 9);
 
-// // a = {10, 10, 20, 20, 30, 30, 40, 40, 50}
-// sort(a, a + 9);
+// a = {10, 10, 20, 20, 30, 30, 40, 40, 50}
+sort(a, a + 9);
 
-// // Tìm vị trí của phần tử đầu tiên lớn hơn hoặc bằng 30 trong mảng a.
-// // Muốn đưa ra vị trí là số nguyên thì lấy kết quả hàm trừ đi iterator a[0].
-// int pos1 = lower_bound(a, a + 9, 30) - a;
-// cout << "Vị trí đầu tiên lớn hơn hoặc bằng 30 là: " << pos1 << endl;
+// Tìm vị trí của phần tử đầu tiên lớn hơn hoặc bằng 30 trong mảng a.
+// Muốn đưa ra vị trí là số nguyên thì lấy kết quả hàm trừ đi iterator a[0].
+int pos1 = lower_bound(a, a + 9, 30) - a;
+cout << "Vị trí đầu tiên lớn hơn hoặc bằng 30 là: " << pos1 << endl;
 
-// // v = {50, 40, 40, 30, 30, 20, 20, 10, 10};
-// sort(v.begin(), v.end(), comp);
+// v = {50, 40, 40, 30, 30, 20, 20, 10, 10};
+sort(v.begin(), v.end(), comp);
 
-// // Tìm vị trí đầu tiên nhỏ hơn hoặc bằng số 20 trong đoạn [0, 5] của vector v.
-// // Tương tự, lấy hai iterator trừ cho nhau để ra được vị trí là số nguyên.
-// int pos2 = lower_bound(v.begin(), v.begin() + 5, 20, comp) - v.begin();
-// cout << "Vị trí đầu tiên nhỏ hơn hoặc bằng 20 là: " << pos2;
+// Tìm vị trí đầu tiên nhỏ hơn hoặc bằng số 20 trong đoạn [0, 5] của vector v.
+// Tương tự, lấy hai iterator trừ cho nhau để ra được vị trí là số nguyên.
+int pos2 = lower_bound(v.begin(), v.begin() + 5, 20, comp) - v.begin();
+cout << "Vị trí đầu tiên nhỏ hơn hoặc bằng 20 là: " << pos2;
 
-// upper_bound
-// // Dạng 1:
-// upper_bound(l, r, val);
+upper_bound
+// Dạng 1:
+upper_bound(l, r, val);
 
-// // Dạng 2:
-// upper_bound(l, r, val, comp);
-// int a[] = {10, 20, 30, 40, 50, 40, 30, 20, 10};
-//     vector < int > v(a, a + 9);
+// Dạng 2:
+upper_bound(l, r, val, comp);
+int a[] = {10, 20, 30, 40, 50, 40, 30, 20, 10};
+    vector < int > v(a, a + 9);
 	
-//     // a = {10, 10, 20, 20, 30, 30, 40, 40, 50}
-//     sort(a, a + 9);
+    // a = {10, 10, 20, 20, 30, 30, 40, 40, 50}
+    sort(a, a + 9);
 	
-//     // Tìm vị trí của phần tử đầu tiên lớn hơn 30 trong mảng a.
-//     // Muốn đưa ra vị trí là số nguyên thì lấy kết quả hàm trừ đi iterator a[0].
-//     int pos1 = upper_bound(a, a + 9, 30) - a;
-//     cout << "Vị trí đầu tiên lớn hơn 30 là: " << pos1 << endl;
+    // Tìm vị trí của phần tử đầu tiên lớn hơn 30 trong mảng a.
+    // Muốn đưa ra vị trí là số nguyên thì lấy kết quả hàm trừ đi iterator a[0].
+    int pos1 = upper_bound(a, a + 9, 30) - a;
+    cout << "Vị trí đầu tiên lớn hơn 30 là: " << pos1 << endl;
 
-//     // v = {50, 40, 40, 30, 30, 20, 20, 10, 10};
-//     sort(v.begin(), v.end(), comp);
+    // v = {50, 40, 40, 30, 30, 20, 20, 10, 10};
+    sort(v.begin(), v.end(), comp);
     
-//     // Tìm vị trí đầu tiên nhỏ hơn hơn 50 trong đoạn [0, 5] của vector v.
-//     // Tương tự, lấy hai iterator trừ cho nhau để ra được vị trí là số nguyên.
-//     int pos2 = upper_bound(v.begin(), v.end(), 50, comp) - v.begin();
-//     cout << "Vị trí đầu tiên nhỏ hơn 50 là: " << pos2;
+    // Tìm vị trí đầu tiên nhỏ hơn hơn 50 trong đoạn [0, 5] của vector v.
+    // Tương tự, lấy hai iterator trừ cho nhau để ra được vị trí là số nguyên.
+    int pos2 = upper_bound(v.begin(), v.end(), 50, comp) - v.begin();
+    cout << "Vị trí đầu tiên nhỏ hơn 50 là: " << pos2;
 
-// equal_range
-// int a[] = {10, 20, 30, 30, 20, 10, 10, 20};
-//     // Biến tìm kiếm đối với mảng phải sử dụng con trỏ.
-//     pair < int* , int* > bounds_1;
+equal_range
+int a[] = {10, 20, 30, 30, 20, 10, 10, 20};
+    // Biến tìm kiếm đối với mảng phải sử dụng con trỏ.
+    pair < int* , int* > bounds_1;
     
-//     vector < int > v(a, a + 8);
-//     // Biến tìm kiếm đối với vector phải sử dụng iterator.
-//     pair < vector < int > :: iterator, vector < int > :: iterator > bounds_2;
+    vector < int > v(a, a + 8);
+    // Biến tìm kiếm đối với vector phải sử dụng iterator.
+    pair < vector < int > :: iterator, vector < int > :: iterator > bounds_2;
 
-//     // a = {10, 10, 10, 20, 20, 20, 30, 30}.
-//     sort(a, a + 8);
+    // a = {10, 10, 10, 20, 20, 20, 30, 30}.
+    sort(a, a + 8);
 
-//     // Dùng phép toán so sánh mặc định với mảng a.
-//     // Tìm kiếm đoạn đầu tiên bằng 20.
-//     bounds_1 = equal_range(a, a + 8, 20); // Đoạn [3, 6].
-//     cout << bounds_1.first - a << ' ' << bounds_1.second - a << endl;
+    // Dùng phép toán so sánh mặc định với mảng a.
+    // Tìm kiếm đoạn đầu tiên bằng 20.
+    bounds_1 = equal_range(a, a + 8, 20); // Đoạn [3, 6].
+    cout << bounds_1.first - a << ' ' << bounds_1.second - a << endl;
 
-//     // v = {30, 30, 20, 20, 20, 10, 10, 10}.
-//     sort(v.begin(), v.end(), comp);
+    // v = {30, 30, 20, 20, 20, 10, 10, 10}.
+    sort(v.begin(), v.end(), comp);
 
-//     // Dùng phép toán so sánh comp với vector v.
-//     // Iterator first: Trỏ vào phần tử đầu tiên nhỏ hơn hoặc bằng 20.
-//     // Iterator second: Trỏ vào phần tử đầu tiên nhỏ hơn 20.
-//     bounds_2 = equal_range(v.begin(), v.end(), 20, comp); // Đoạn [2, 5].
-//     cout << bounds_2.first - v.begin() << ' ' << bounds_2.second - v.begin() << en
+    // Dùng phép toán so sánh comp với vector v.
+    // Iterator first: Trỏ vào phần tử đầu tiên nhỏ hơn hoặc bằng 20.
+    // Iterator second: Trỏ vào phần tử đầu tiên nhỏ hơn 20.
+    bounds_2 = equal_range(v.begin(), v.end(), 20, comp); // Đoạn [2, 5].
+    cout << bounds_2.first - v.begin() << ' ' << bounds_2.second - v.begin() << en
+
+// nhược điểm của lower upper bound and equal_range là phải sắp xếp trước khi tìm kiếm
+
+với find(array.begin(), end, giá_trị_cần_tìm). thì không phải sắp xếp trước mà nó sẽ tìm đến vị trí đầu tiên
+
 
 int main() {
     int t;

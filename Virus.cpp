@@ -97,27 +97,89 @@ void _print(const Head &H, const Tail &...T) {
 #define debug(x...)
 #endif
 
-int N;
-vector<int> A;
-int main() {
-    cin >> N;
+int N, M;
+vector<int> A, B;
+vector<vector<int>> virus;
+vector<int> cfg;
 
-    A.resize(N);
+bool findVirus(vector<int>& v) {
+    int n = virus.size();
+    int n1 = virus[0].size();
+    for(int i = 0; i < n; ++i) {
+        bool check1 = true;
+        for (int j = 1; j < n1; ++j) {
+            int first = v[j-1] - virus[i][j-1];
+            int second = v[j] - virus[i][j];
+            // debug(first, second);
+            if(first != second) {
+                check1 = false;
+                break;
+            }
+        }
+        if(check1 == true) return true;
+    }
+    return false;
+}
+
+void bt(int idx) {
+    if(idx == M) {
+        virus.push_back(cfg);
+        return;
+    }
+
+    for(int i = 0; i < M; ++i) {
+        bool canUse = true;
+        for(auto x:cfg) {
+            if(B[i] == x) {
+                canUse = false;
+                break;
+            }
+        }
+        if(canUse) {
+            cfg.push_back(B[i]);
+            bt(idx+1);
+            cfg.pop_back();
+        }
+    }
+}
+
+int main() {
+    cin >> N >> M;
+
+    A.resize(N,0);
+    B.resize(M,0);
 
     for(auto& x:A) {
         cin >> x;
     }
-    int ans = INT_MIN;
-    int maxRange = 0;
-
-    for(int i = 0; i < N; ++i) {
-        if(maxRange < 0) {
-            maxRange = 0;
-        }
-        maxRange += A[i];
-        ans = max(ans, maxRange);
+    for(auto& x:B) {
+        cin >> x;
     }
-    cout << ans;
+    // int i = 0;
+    // do {
+    //     // vector<int> temp;
+    //     // for(auto x:B) {
+    //     //     temp.push_back(x);
+    //     // }
+    //     virus.push_back(B);
+    //     debug(B);
+    //     // i++;
+    // }while(next_permutation(B.begin(), B.begin()+M));
+    bt(0);
+    debug(virus);
+    int c = 0;
+    for(int i = 0; i <= N - M; ++i) {
+        vector<int> t;
+        for(int j = 0; j < M; ++j) {
+            t.push_back(A[i+j]);
+        }
+        debug(t);
+        if(findVirus(t) == true) {
+            cout << "true" ; debug(t);
+            c++;
+        }
+    }
+    cout << c;
 
     return 0;
 }
