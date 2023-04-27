@@ -98,45 +98,52 @@ void _print(const Head &H, const Tail &...T) {
 #define debug(x...)
 #endif
 
-bool com(int& a, int& b) {
-    return a < b;
-}
-
-void solve()
-{
-    int n, k;
-    cin >> n >> k;
-    int a[n];
-    for(int i = 0; i < n; i++)
-    {
-        cin >> a[i];
+int nKid;
+int nBag;
+vector<int> bag;
+vector<int> cfg;
+ 
+int ans = INT_MAX;
+ 
+// 1. Try to fill configuration cfg at position index
+// 2. Continue to do it with position index + 1 by recursive
+void bt(int index) {
+    if (index == nBag) {
+        // Process cfg
+        int maxCandy = 0;
+        for (auto e : cfg) maxCandy = max(maxCandy, e); 
+        ans = min(ans, maxCandy);
+        return;
     }
-    long long ans = 0;
-    long long sum = 0;
-    for(int i = -1; i < n; i++)
-    {
-        long long now = sum;
-        for(int j = i+1; j < min(n, i+32); j++)
-        {
-            int copy = a[j];
-            copy>>=j-i;
-            now+=copy;
-        }
-        ans = max(ans, now);
-        if(i+1 != n)
-        {
-            sum+=a[i+1]-k;
-        }
+     
+    for (int i = 0; i < nKid; i++) {
+        cfg[i] += bag[index];
+        debug(cfg);
+        bt(index + 1);
+        cfg[i] -= bag[index];
+        debug(cfg);
     }
-    cout << ans << endl;
+     
 }
  
-int main(){
-    int t;
-    cin >> t;
-    while(t--)
-    {
-        solve();
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+     
+    // int nKids;
+    // int nBag;
+    // vector<int> bag;
+     
+    // 1. Input
+    cin >> nKid >> nBag;
+    bag.resize(nBag, 0);
+    cfg.resize(nKid, 0);
+    for (int i = 0; i < nBag; i++) {
+        cin >> bag[i];
     }
+     
+    // 2. Process
+    bt(0);
+    cout << ans << endl;
+     
     return 0;
 }

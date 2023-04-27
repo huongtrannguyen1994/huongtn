@@ -1,7 +1,9 @@
 #include <bits/stdc++.h>
-
+ 
 using namespace std;
-
+ 
+ 
+ 
 /******** Debug Code *******/
 void __print(int x) { cerr << x; }
 void __print(long x) { cerr << x; }
@@ -98,45 +100,57 @@ void _print(const Head &H, const Tail &...T) {
 #define debug(x...)
 #endif
 
-bool com(int& a, int& b) {
-    return a < b;
+void caculator(int g, int& c0, int& c1) {
+    if (g == 1) c1++;
+    else c0++;
+    // cout << g << " " << c0 << " " << c1 << endl;
 }
 
-void solve()
-{
-    int n, k;
-    cin >> n >> k;
-    int a[n];
-    for(int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-    long long ans = 0;
-    long long sum = 0;
-    for(int i = -1; i < n; i++)
-    {
-        long long now = sum;
-        for(int j = i+1; j < min(n, i+32); j++)
-        {
-            int copy = a[j];
-            copy>>=j-i;
-            now+=copy;
-        }
-        ans = max(ans, now);
-        if(i+1 != n)
-        {
-            sum+=a[i+1]-k;
+void solve() {
+    int n;
+    cin >> n;
+    vector<vector<int>> gird(n,vector<int>(n));
+    vector<vector<int>> v(n,vector<int>(n, false));
+
+    for(int i = 0; i < n; ++i) {
+        string c;
+        cin >> c;
+        for(int j = 0; j < n; ++j) {
+            gird[i][j] = c[j] - '0';
         }
     }
+    int ans = 0;
+
+    for(int i = 0; i < n; ++i) {
+        for(int j = 0; j < n; ++j) {
+            if (v[i][j] == true) continue;
+            int c_1 = 0, c_0 = 0;
+            caculator(gird[i][j],c_0,c_1);
+            v[i][j] = true;
+            caculator(gird[j][n-i-1],c_0,c_1);
+            v[j][n-i-1] = true;
+            caculator(gird[n-i-1][n-1-j],c_0,c_1);
+            v[n-i-1][n-1-j] = true;
+            caculator(gird[n-1-j][i],c_0,c_1);
+            v[n-1-j][i] = true;
+            if(c_0 >= c_1) ans += c_1;
+            else ans += c_0;
+        }
+    }
+
     cout << ans << endl;
+
 }
- 
-int main(){
+
+
+int32_t main()
+{
     int t;
-    cin >> t;
+    cin>>t;
     while(t--)
     {
         solve();
     }
+    
     return 0;
 }

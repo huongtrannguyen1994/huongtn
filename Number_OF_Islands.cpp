@@ -1,7 +1,9 @@
 #include <bits/stdc++.h>
-
+ 
 using namespace std;
-
+ 
+ 
+ 
 /******** Debug Code *******/
 void __print(int x) { cerr << x; }
 void __print(long x) { cerr << x; }
@@ -97,46 +99,60 @@ void _print(const Head &H, const Tail &...T) {
 #else
 #define debug(x...)
 #endif
-
-bool com(int& a, int& b) {
-    return a < b;
-}
-
-void solve()
-{
-    int n, k;
-    cin >> n >> k;
-    int a[n];
-    for(int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-    long long ans = 0;
-    long long sum = 0;
-    for(int i = -1; i < n; i++)
-    {
-        long long now = sum;
-        for(int j = i+1; j < min(n, i+32); j++)
-        {
-            int copy = a[j];
-            copy>>=j-i;
-            now+=copy;
-        }
-        ans = max(ans, now);
-        if(i+1 != n)
-        {
-            sum+=a[i+1]-k;
-        }
-    }
-    cout << ans << endl;
-}
  
-int main(){
+
+void solve(vector<vector<int>>& gird) {
+    int r = gird.size();
+    int c = gird[0].size();
+    vector<vector<bool>> v(r, vector<bool>(c, false));
+    queue <pair<int,int>> q;
+    int count = 0;
+
+    int mX[] = {1, -1, 0, 0};
+    int mY[] = {0, 0, 1, -1};
+
+    for (int i = 0; i < r; ++i) {
+        for (int j = 0; j < c; ++j) {
+            if (gird[i][j] != 1) continue;
+            if (v[i][j] == true) continue;
+            q.push({i, j});
+            v[i][j] = true;
+            count++;
+            while(!q.empty()) {
+                int x = q.front().first;
+                int y = q.front().second;
+                q.pop();
+                for(int i1 = 0; i1 < 4; ++i1) {
+                    int xl = x + mX[i1];
+                    int yl = y + mY[i1];
+
+                    if(xl < 0 || xl >= r || yl < 0 || yl >= c) continue;
+                    if(!v[xl][yl] && gird[xl][yl] == 1) {
+                        v[xl][yl] = true;
+                        q.push({xl, yl});
+                        debug(q);
+                    }
+                }
+            }
+        }
+    }
+    cout << count;
+}
+
+
+int32_t main()
+{
     int t;
-    cin >> t;
+    cin>>t;
+    vector<vector<int>> grid = {
+  {1, 1, 1, 1, 0},
+  {1, 1, 0, 1, 0},
+  {1, 1, 0, 0, 0},
+  {0, 0, 0, 1, 1}};
     while(t--)
     {
-        solve();
+        solve(grid);
     }
+    
     return 0;
 }

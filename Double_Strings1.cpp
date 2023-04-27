@@ -1,7 +1,9 @@
 #include <bits/stdc++.h>
-
+ 
 using namespace std;
-
+ 
+ 
+ 
 /******** Debug Code *******/
 void __print(int x) { cerr << x; }
 void __print(long x) { cerr << x; }
@@ -98,45 +100,36 @@ void _print(const Head &H, const Tail &...T) {
 #define debug(x...)
 #endif
 
-bool com(int& a, int& b) {
-    return a < b;
+void solve() {
+    int n;
+    cin >> n;
+    string s[n];
+    map<string, bool> mp;
+    for(int i = 0; i < n; ++i) {
+        cin >> s[i];
+        mp[s[i]] = true;
+    }
+    for(int i = 0; i < n; ++i) {
+        bool check = false;
+        for(int j = 0; j < s[i].length(); ++j) {
+            string first = s[i].substr(0, j), second = s[i].substr(j);
+            if (mp[first] && mp[second]) check = true;
+        }
+        if(check) cout << "1";
+        else cout << "0";
+    }
+    cout << endl;
 }
 
-void solve()
+
+int32_t main()
 {
-    int n, k;
-    cin >> n >> k;
-    int a[n];
-    for(int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-    long long ans = 0;
-    long long sum = 0;
-    for(int i = -1; i < n; i++)
-    {
-        long long now = sum;
-        for(int j = i+1; j < min(n, i+32); j++)
-        {
-            int copy = a[j];
-            copy>>=j-i;
-            now+=copy;
-        }
-        ans = max(ans, now);
-        if(i+1 != n)
-        {
-            sum+=a[i+1]-k;
-        }
-    }
-    cout << ans << endl;
-}
- 
-int main(){
     int t;
-    cin >> t;
+    cin>>t;
     while(t--)
     {
         solve();
     }
+    
     return 0;
 }

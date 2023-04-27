@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
- 
+
 using namespace std;
 
- 
 /******** Debug Code *******/
 void __print(int x) { cerr << x; }
 void __print(long x) { cerr << x; }
@@ -98,66 +97,50 @@ void _print(const Head &H, const Tail &...T) {
 #else
 #define debug(x...)
 #endif
-int n, d, f;
-bool Com(pair<int, int>& a, pair<int, int>& b) {
-    return a.first > b.first;
+
+
+vector<pair<int,int>> cfg;
+vector<int> ans;
+int maxL = 0, check = -1;
+int c = 0;
+
+void process() {
+    maxL = max(maxL, c);
 }
-int test(vector<pair<int, int>>& a) {
-    // vector<bool> v(n, false);
-    vector<int> p;
-    int u, c;
-    //      fisrt second pos count
-    queue<vector<int>> par;
 
-    
-    // a.erase(a.begin()+n);
-    sort(a.begin(), a.end(), Com);
-
-    //                first second pos count
-    p = {a[0].first, a[0].second, 1, 0};
-    par.push(p);
-    // v[0] = true;
-    while(!par.empty()) {
-        p = par.front();
-        par.pop();
-
-        // int pos = lower_bound(a.begin(), a.end(), )
-        debug(p);
-        debug(par);
-        for(int i = p[2]; i <= n; ++i) {
-            debug(a[i].first);
-            debug(a[i].second);
-            if(p[1] >= p[0]) return p[3];
-            // 25       15          10
-            if(p[0] - a[i].first > p[1]) break;
-            // 10       10          25
-            if(p[1] + a[i].second >= p[0]) return p[3]+1;
-                        // 15
-            int first = a[i].first;
-                         //   10        25     15           10 
-            int second = a[i].second - p[0] + a[i].first + p[1];
-            int thir = i+1;
-            int four = p[3]+1;
-            vector<int> p1 = {first, second, thir, four};
-            par.push(p1);
-        }
+bool sortPair(const pair<int,int>& a, const pair<int,int>& b) {
+    return a.second > b.second;
+}
+void bt(int idx, vector<pair<int, int>>& arr, int d, int f, int k) {
+    if(k <= 0) {
+        process();
+        return;
     }
-    return -1;
-    
+    int disToNextStation = d - arr[idx].first;
+    if( f >= disToNextStation) {
+        c += 1;
+        f = f + arr[idx].second - disToNextStation;
+        k = arr[idx].first - f;
+        // debug(k);
+        bt(idx+1, arr, arr[idx].first, f, k);
+        c--;
+        bt(idx+1, arr, arr[idx].first, f, k);
+    }
 }
+
 int main() {
-    // int t;
-    // cin >> t;
-    // while(t > 0) {
-    //     test(1);
-    //     t--;
-    // }
+    int n;
     cin >> n;
-    vector<pair<int, int>> a(n+1);
-    for(auto& x:a) {
+    vector<pair<int,int>> arr(n);
+    for(auto& x:arr){
         cin >> x.first >> x.second;
     }
-    cout << test(a);
-    // reserve(a.begin)
+    // count++;
+    int d, f;
+    cin >> d >> f;
+    int k = d-f;
+    sort(arr.begin(), arr.end(), sortPair);
+    bt(0, arr, d, f, k);
+    cout << maxL;
     return 0;
 }

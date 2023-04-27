@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
  
 using namespace std;
-
+ 
+ 
  
 /******** Debug Code *******/
 void __print(int x) { cerr << x; }
@@ -99,21 +100,50 @@ void _print(const Head &H, const Tail &...T) {
 #define debug(x...)
 #endif
 
-void test(int idx) {
-    // int n;
-    // cin >> n;
-    vector<int> a = {1,2,6,4,3,4,5};
-    // sort(a.begin(), a.end());
-    int pos = lower_bound(a.begin(), a.begin()+5, 6) - a.begin();
-    cout << pos;
-    
-}
-int main() {
-    int t;
-    cin >> t;
-    while(t > 0) {
-        test(1);
-        t--;
+vector<string> cfg;
+void bt(vector<string>& a, int idx, vector<int>& ans) {
+    int n = a.size();
+    if(cfg.size() == 2) {
+        string s = cfg[0] + cfg[1];
+        for(int i = 0; i < n; ++i) {
+            auto it = find(a.begin()+i, a.end(), s);
+            if(it != a.end()) {
+            int i = it - a.begin();
+            ans[i] = 1;
+            }
+        }
+        return;
     }
+    for (int i = 0; i < n; ++i) {
+        cfg.push_back(a[i]);
+        bt(a, idx+1, ans);
+        cfg.pop_back();
+    }  
+}
+void solve() {
+    int n;
+    cin >> n;
+    vector<string> a(n);
+    vector<int> ans(n,0);
+    for(auto& x: a) {
+        cin >> x;
+    }
+    bt(a, 0, ans);
+    for(auto x:ans) {
+        cout << x;
+    }
+    cout << endl;
+}
+
+
+int32_t main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        solve();
+    }
+    
     return 0;
 }

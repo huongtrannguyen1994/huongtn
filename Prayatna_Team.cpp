@@ -1,7 +1,9 @@
 #include <bits/stdc++.h>
-
+ 
 using namespace std;
-
+ 
+ 
+ 
 /******** Debug Code *******/
 void __print(int x) { cerr << x; }
 void __print(long x) { cerr << x; }
@@ -97,46 +99,69 @@ void _print(const Head &H, const Tail &...T) {
 #else
 #define debug(x...)
 #endif
+ 
 
-bool com(int& a, int& b) {
-    return a < b;
+void solve(int n, int m, vector<int>& a) {
+    vector<vector<int>> gird(n+1, vector<int>());
+    for(int i = 0; i < m; ++i) {
+        int c, d;
+        cin >> c >> d;
+        gird[c].push_back(d);
+        gird[d].push_back(c);
+    }
+
+    vector<bool> v(n+1, false);
+    stack<int> s;
+    int ans = 0;
+    int minL;
+    // debug(a);
+    // debug(gird);
+    for(int j = 1; j <= n; ++j){
+        // arr.clear();
+        if(v[j] != true) {
+            s.push(j);
+            minL = a[j];
+            // debug(s);
+            while(s.size() > 0) {
+                int u = s.top();
+                v[u] = true;
+                s.pop();
+                minL = min(minL, a[u]);
+                for(auto y:gird[u]) {
+                    if (v[y] == false) {
+                        s.push(y);
+                        v[y] = true;
+                    }
+                }
+            }
+            ans += minL;
+        }
+        // ans += minL;
+        
+        cout << "ans: " << ans << endl;
+    }
+    // for(int i = 1; i <= n; ++i) {
+    //     if(v[i] != true) {
+    //         ans += a[i];
+    //     }
+    // }
+    cout << ans;
 }
 
-void solve()
+
+int32_t main()
 {
-    int n, k;
-    cin >> n >> k;
-    int a[n];
-    for(int i = 0; i < n; i++)
-    {
+    int n, m;
+    cin>>n >> m;
+    vector<int> a(n+1, 0);
+    for(int i = 1; i <= n; ++i) {
         cin >> a[i];
     }
-    long long ans = 0;
-    long long sum = 0;
-    for(int i = -1; i < n; i++)
-    {
-        long long now = sum;
-        for(int j = i+1; j < min(n, i+32); j++)
-        {
-            int copy = a[j];
-            copy>>=j-i;
-            now+=copy;
-        }
-        ans = max(ans, now);
-        if(i+1 != n)
-        {
-            sum+=a[i+1]-k;
-        }
-    }
-    cout << ans << endl;
-}
- 
-int main(){
-    int t;
-    cin >> t;
-    while(t--)
-    {
-        solve();
-    }
+    solve(n, m, a);
+    // while(t--)
+    // {
+    //     solve(grid);
+    // }
+    
     return 0;
 }

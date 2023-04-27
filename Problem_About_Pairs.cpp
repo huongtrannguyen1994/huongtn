@@ -1,7 +1,9 @@
 #include <bits/stdc++.h>
-
+ 
 using namespace std;
-
+ 
+ 
+ 
 /******** Debug Code *******/
 void __print(int x) { cerr << x; }
 void __print(long x) { cerr << x; }
@@ -98,45 +100,35 @@ void _print(const Head &H, const Tail &...T) {
 #define debug(x...)
 #endif
 
-bool com(int& a, int& b) {
-    return a < b;
+void solve() {
+	int n;
+	cin >> n;
+	int a[n + 1];
+	for (int i = 1; i <= n; i++) {
+		cin >> a[i];
+	}
+	long long res = 0;
+	vector<int> v;
+	for (int i = 1; i <= n; i++) {
+		if (a[i] >= i) {continue;}
+		res += (long long)(lower_bound(v.begin(), v.end(), a[i]) - v.begin());
+		v.push_back(i);
+        debug(res);
+        debug(v);
+	}
+    cout << endl;
+	cout << res << '\n';
 }
 
-void solve()
+
+int32_t main()
 {
-    int n, k;
-    cin >> n >> k;
-    int a[n];
-    for(int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-    long long ans = 0;
-    long long sum = 0;
-    for(int i = -1; i < n; i++)
-    {
-        long long now = sum;
-        for(int j = i+1; j < min(n, i+32); j++)
-        {
-            int copy = a[j];
-            copy>>=j-i;
-            now+=copy;
-        }
-        ans = max(ans, now);
-        if(i+1 != n)
-        {
-            sum+=a[i+1]-k;
-        }
-    }
-    cout << ans << endl;
-}
- 
-int main(){
     int t;
-    cin >> t;
+    cin>>t;
     while(t--)
     {
         solve();
     }
+    
     return 0;
 }

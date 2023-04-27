@@ -1,7 +1,9 @@
 #include <bits/stdc++.h>
-
+ 
 using namespace std;
-
+ 
+ 
+ 
 /******** Debug Code *******/
 void __print(int x) { cerr << x; }
 void __print(long x) { cerr << x; }
@@ -98,45 +100,43 @@ void _print(const Head &H, const Tail &...T) {
 #define debug(x...)
 #endif
 
-bool com(int& a, int& b) {
-    return a < b;
+int Kids, Candys;
+vector<int> cfg;
+int ans = INT_MAX;
+void solve(vector<int>& a, int idx) {
+    debug(cfg);
+    // debug(Candys);
+    // debug(a);
+    if(idx == Candys) {
+        // debug(cfg);
+        vector<int>::iterator tem = max_element(cfg.begin(), cfg.end());
+        int maxCandy = *tem;
+        ans = min(ans, maxCandy);
+        return;
+    }
+    for(int i = 0; i < Kids; ++i) {
+        cfg[i] += a[idx];
+        // debug(cfg);
+        solve(a, idx+1);
+        cfg[i] -= a[idx];
+    }
+    // debug(cfg);
 }
 
-void solve()
+
+int32_t main()
 {
-    int n, k;
-    cin >> n >> k;
-    int a[n];
-    for(int i = 0; i < n; i++)
-    {
-        cin >> a[i];
+    cin>> Kids >> Candys;
+    vector<int> in(Candys);
+    for(auto& x:in) {
+        cin >> x;
     }
-    long long ans = 0;
-    long long sum = 0;
-    for(int i = -1; i < n; i++)
-    {
-        long long now = sum;
-        for(int j = i+1; j < min(n, i+32); j++)
-        {
-            int copy = a[j];
-            copy>>=j-i;
-            now+=copy;
-        }
-        ans = max(ans, now);
-        if(i+1 != n)
-        {
-            sum+=a[i+1]-k;
-        }
-    }
-    cout << ans << endl;
-}
- 
-int main(){
-    int t;
-    cin >> t;
-    while(t--)
-    {
-        solve();
-    }
+    cfg.resize(Kids, 0);
+    solve(in, 0);
+    // while(t--)
+    // {
+    //     solve(grid);
+    // }
+    cout << ans;
     return 0;
 }
