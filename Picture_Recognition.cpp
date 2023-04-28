@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
  
 using namespace std;
@@ -101,33 +100,60 @@ void _print(const Head &H, const Tail &...T) {
 #define debug(x...)
 #endif
 
+vector<pair<int,int>> color_paint_group[10];
 
 int main() {
     int N;
     cin >> N;
-    vector<int> M(N+1,0);
-    for(int i = 1; i <= N; ++i) {
-        cin >> M[i];
+    vector<vector<int>> a(N, vector<int>(N));
+    vector<string> b(N);
+    for(auto& x:b) {
+        cin >> x;
     }
-    int tot = 0;
-    vector<int> A(N+1,0); // độ cao lớn nhất tại vị trí i của A[i] + P[i]
-    vector<int> B(N+1,0); // độ cao lớn nhất tại vị trí i của A[i] - P[i]
+    for(int i = 0; i < N; ++i) {
+        for(int j = 0; j < N; ++j) {
+            a[i][j] = b[i][j] - '0';
+            pair<int,int> tem = {i, j};
+            color_paint_group[a[i][j]].push_back(tem);
+        }
+    }
+    int ans = 0;
+    vector<vector<int>> v(N, vector<int>(N,0));
+    // int n = 
+    for(int i = 1; i < 10; ++i) {
+        // debug(i);
+        int min_row = N, min_col = N, max_col = 0, max_row = 0;
+        if(color_paint_group[i].size() == 0) continue;
+        for(auto x:color_paint_group[i]) {
+            min_row = min(x.first, min_row);
+            min_col = min(x.second, min_col);
+            max_row = max(x.first, max_row);
+            max_col = max(x.second, max_col);
+        }
+        bool check = true;
+        for(int row = min_row; row <= max_row; ++row) {
+            for(int col = min_col; col <= max_col; ++col) {
+                // debug(v[row][col]);
+                if (v[row][col] == 1) {
+                    check = false;
+                    ans++;
+                    break;
+                }
+                v[row][col] = 1;
+            }
+            if(check == false) {
+                // ans--;
+                break;
+                // ans--;
+            }
+        }
+        // debug(v);
+        // debug(check);
+        // if (check) ans++;
+    }
+    cout << ans;
     // debug(ans);
-    for(int i = 1; i <= N; ++i) {
-        A[i] = max(A[i-1], B[i-1] + M[i]);
-        B[i] = max(B[i-1], A[i-1] - M[i]);
-        tot = max(A[i], B[i]);
-    }
-    cout << tot;
+    // debug(b);
+    // debug(color_paint_group);
     return 0;
 }
-// A[i] // độ cao lớn nhất tại vị trí i của A[i] + P[i]
-// B[i] // độ cao lớn nhất tại vị trí i của A[i] - P[i]
-
-// A[0] = B[0] = 0;
-
-// for(int i = 1; i<= n; ++i) {
-//     A[i] = max(A[i-1], B[i-1] + P[i]);
-//     B[i] = max(B[i-1], A[i-1] - P[i]);
-// }
-// ans = max(A[i], B[i]);
