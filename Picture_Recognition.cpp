@@ -100,6 +100,23 @@ void _print(const Head &H, const Tail &...T) {
 #define debug(x...)
 #endif
 
+#define for_n(i, n) for(int i = 0; i < n; ++i)
+
+template <typename T>
+void debug_v(vector<vector<T>> v) {
+    int n = v.size();
+    int m = v[0].size();
+    cout << "{";
+    for_n(i, n) {
+        cout << "{";
+        for_n(j, m) {
+            cout << v[i][j] << ",";
+        }
+        cout << "}";
+    }
+    cout << "}" << endl;
+}
+
 vector<pair<int,int>> color_paint_group[10];
 
 int main() {
@@ -119,11 +136,15 @@ int main() {
     }
     int ans = 0;
     vector<vector<int>> v(N, vector<int>(N,0));
+    vector<bool> valid(10, true);
     // int n = 
     for(int i = 1; i < 10; ++i) {
         // debug(i);
-        int min_row = N, min_col = N, max_col = 0, max_row = 0;
-        if(color_paint_group[i].size() == 0) continue;
+        int min_row = N, min_col = N, max_col = -1, max_row = -1;
+        if(color_paint_group[i].size() == 0) {
+            valid[i] = false;
+            continue;
+        }
         for(auto x:color_paint_group[i]) {
             min_row = min(x.first, min_row);
             min_col = min(x.second, min_col);
@@ -134,22 +155,26 @@ int main() {
         for(int row = min_row; row <= max_row; ++row) {
             for(int col = min_col; col <= max_col; ++col) {
                 // debug(v[row][col]);
-                if (v[row][col] == 1) {
-                    check = false;
-                    ans++;
-                    break;
+                if (a[row][col] != i) {
+                    // check = false;
+                    // ans++;
+                    // break;
+                    valid[a[row][col]] = false;
                 }
-                v[row][col] = 1;
+                // v[row][col] = 1;
             }
-            if(check == false) {
-                // ans--;
-                break;
-                // ans--;
-            }
+            // if(check == false) {
+            //     // ans--;
+            //     break;
+            //     // ans--;
+            // }
         }
-        // debug(v);
+        // debug_v(v);
         // debug(check);
         // if (check) ans++;
+    }
+    for(int i = 1; i < 10; ++i){
+        if(valid[i]) ans++;
     }
     cout << ans;
     // debug(ans);

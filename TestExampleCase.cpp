@@ -41,7 +41,12 @@ void backtrack(int index, const vector<int>& arr) {
  
  
 int main() {
-    vector<int> arr = {1, 2, 3};
-    backtrack(0, arr);
+    int a = 0; // Define an integer variable
+    a++;
+    cout << a;
+    auto f = [&a]() mutable { cout << a ; return ++a; }; // Build lỗi vì thay đổi value của a ("captured by value")
+    int a1 = f();
+    cout << a1;
+    cout << a;
     return 0;
 }
