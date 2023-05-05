@@ -35,3 +35,8 @@ cout << " " << *x; //9
 cfg.resize(3, 0); // {0, 0, 0}
 
 next_permutation(a.begin(), a.end()); // hoan vi cua tat ca cach so trong vector a.
+ceil(int) // làm tròn số lên số nguyên
+
+vector<int> a;
+a.back() // lấy phần tử cuối cùng
+a.front() // lấy phần tử đầu tiên

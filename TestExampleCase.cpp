@@ -47,6 +47,9 @@ int main() {
     auto f = [&a]() mutable { cout << a ; return ++a; }; // Build lỗi vì thay đổi value của a ("captured by value")
     int a1 = f();
     cout << a1;
+    double x = 1.05;
+    double x1 = ceil(x);
+    cout << x1;
     cout << a;
     return 0;
 }

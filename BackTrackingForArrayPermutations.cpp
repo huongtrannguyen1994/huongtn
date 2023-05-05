@@ -10,7 +10,7 @@ void process(const vector<int>& cfg) {
 void bt(int idx, const vector<int>& arr) {
     int n = arr.size();
 
-    if (idx == 2) {
+    if (idx == 3) {
         process(cfg);
         return;
     }
@@ -35,7 +35,7 @@ void bt(int idx, const vector<int>& arr) {
     }
 }
 int main() {
-    vector<int> arr = {1,2,3,4};
+    vector<int> arr = {0,1,2,3,4,5,6,7,8,9};
 
     bt(0, arr);
     return 0;
