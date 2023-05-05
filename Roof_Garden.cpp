@@ -99,88 +99,46 @@ void _print(const Head &H, const Tail &...T) {
 #else
 #define debug(x...)
 #endif
-int N;
 
 
 #define for_n(i, n) for(int i = 0; i < n; ++i)
 
-int N;//Map Size
-int m[110][110];//Map information
-bool v[110][110];
-int d[110][110];
+int N;//Number of buildings
+vector<int> high;//Height of buildings
 
-int a[4] = {1, -1, 0, 0};
-int b[4] = {0, 0, 1, -1};
+// void Input_Data(void){
+// 	cin >> N;
+// 	H.resize(N);
+// 	for (int i = 0; i < N; i++){
+// 		cin >> H[i];
+// 	}
+// }
 
-void Input_Data(){
-	cin >> N;
-	for (int i = 0; i < N; i++){
-		string s;
-		cin >> s;
-		for_n(j, N) {
-			m[i][j] = s[j]-'0';
-		}
+void caculator(vector<int>& a) {
+	long long ans = 0;
+	for(int i = 0; i < N; i++) {
+		int x = a[i];
+        cout <<a[i];
+		int c = lower_bound(a.begin(), a.end(), x) - a.begin();
+		debug(a);
+		cout << c << " ";
+		ans += c;
 	}
-}
-
-bool min_distance(int& x, int& y) {
-	int min = INT_MAX;
-	for_n(i, N) {
-		for_n(j, N) {
-			if(!v[i][j] && d[i][j] < min) {
-				min = d[i][j];
-				x = i;
-				y = j;
-			}
-		}
-	}
-	return (min != INT_MAX);
-}
-
-void dijkstra(){
-	//init
-	for_n(i, N) {
-		for_n(j, N) {
-			d[i][j] = INT_MAX, v[i][j] = false;
-		}
-	}
-	int minX, minY;
-	d[0][0] = 0;
-	
-	while(true) {
-		if((minX == N-1 and minY == N-1)) {
-			break;
-		}
-		
-		if(min_distance(minX, minY)) v[minX][minY] = true;
-		
-		for_n(i, 4) {
-			int x = minX + a[i];
-			int y = minY + b[i];
-			if(x >= 0 && x < N && y >=0 && y < N) {
-				if(!v[x][y] && d[x][y] > d[minX][minY] + m[x][y]) {
-					d[x][y] = d[minX][minY] + m[x][y];
-				}
-			}
-		}
-		
-	}
-	// cout << minX << minY<< endl;
-	cout << d[minX][minY];
+	cout << ans;
 }
 
 int main(){
-	// int ans = -1;
-	Input_Data();		//	Input function
-	dijkstra();
-
+	// long long ans = -1;
+    cin >> N;
+	high.resize(N);
+	for (auto& x:high){
+		cin >> x;
+	}
+	// Input_Data();		//	Input function
+	caculator(high);
 	//	Write the code
-
-
-
 	
 	
-	// cout << ans << endl;	//	Output answer
-
+	// cout << ans << endl;	//	Output right answer
 	return 0;
 }

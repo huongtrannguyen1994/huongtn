@@ -166,6 +166,10 @@ int main() {
         sigD = -1;
         D.erase(D.begin());
     }
+    if(S[0] == '0' || D[0] == '0') {
+        cout << '0' << endl;
+        continue;
+    }
     int ls = S.length();
     int ld = D.length();
     vector<int> a(ls), b(ld);
