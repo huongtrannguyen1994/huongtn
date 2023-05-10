@@ -38,18 +38,32 @@ void backtrack(int index, const vector<int>& arr) {
         }
     }
 }
- 
+
+int N = 5;
+vector<int> A = {1, 3, 5, 7, 9};
+
+void Solve(){
+    int value, cnt=0, from=0;
+    cout << N << endl;
+    value = A[from];
+    while (cnt < N){
+        while (value == 0){
+            cout <<" 1: " << from << " ";
+            from = (from + 1) % N;
+            value = A[from];
+        }
+        cout << from << "," << value << " ";
+        cnt++;
+        A[from] = 0;
+        from = (value + from) % N;
+        value = A[from];
+        cout << from << "," << value << endl;
+    }
+    // cout << from << "," << value << endl;
+}
+
  
 int main() {
-    int a = 0; // Define an integer variable
-    a++;
-    cout << a;
-    auto f = [&a]() mutable { cout << a ; return ++a; }; // Build lỗi vì thay đổi value của a ("captured by value")
-    int a1 = f();
-    cout << a1;
-    double x = 1.05;
-    double x1 = ceil(x);
-    cout << x1;
-    cout << a;
+    Solve();
     return 0;
 }
