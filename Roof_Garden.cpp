@@ -104,7 +104,7 @@ void _print(const Head &H, const Tail &...T) {
 #define for_n(i, n) for(int i = 0; i < n; ++i)
 
 int N;//Number of buildings
-vector<int> high;//Height of buildings
+vector<int> H;//Height of buildings
 
 // void Input_Data(void){
 // 	cin >> N;
@@ -114,15 +114,21 @@ vector<int> high;//Height of buildings
 // 	}
 // }
 
-void caculator(vector<int>& a) {
+void caculator() {
 	long long ans = 0;
-	for(int i = 0; i < N; i++) {
-		int x = a[i];
-        cout <<a[i];
-		int c = lower_bound(a.begin(), a.end(), x) - a.begin();
-		debug(a);
-		cout << c << " ";
-		ans += c;
+    vector<int> next_right(N+1, N);
+    
+	for(int i = N-2; i >= 0; --i) {
+        int j = i+1;
+        while(1) {
+            if (H[i] <= H[j]) {
+                ans += j - i - 1;
+                next_right[i] = j;
+                break;
+            } else {
+                j = next_right[j];
+            }
+        }
 	}
 	cout << ans;
 }
@@ -130,15 +136,11 @@ void caculator(vector<int>& a) {
 int main(){
 	// long long ans = -1;
     cin >> N;
-	high.resize(N);
-	for (auto& x:high){
+	H.resize(N);
+	for (auto& x:H){
 		cin >> x;
 	}
-	// Input_Data();		//	Input function
-	caculator(high);
-	//	Write the code
-	
-	
-	// cout << ans << endl;	//	Output right answer
+    H.push_back(INT_MAX);
+	caculator();
 	return 0;
 }
