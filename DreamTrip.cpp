@@ -39,8 +39,16 @@ int main() {
         return 0;
     }
     money[0] = R[0];
-    dp(0, R);
-    cout << ans;
+    // dp(0, R);
+
+    for(int i=0; i<=N-3; ++i) {
+        if(R[i]+R[i+2] > R[i+1]) R[i+2] = R[i]+R[i+2];
+        else R[i+2] = R[i+1];
+    }
+    sort(R.rbegin(),R.rend());
+    // for(auto x:R) cout << x << " ";
+    cout << R[0];
+    // cout << ans;
     return 0;
     
 }
